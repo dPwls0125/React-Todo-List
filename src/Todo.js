@@ -8,6 +8,7 @@ class Todo extends React.Component {
         this.state = { item: props.item, readOnly: true };  // 매개변수 item 의 변수/값을 item에 대입
 
         this.delete = props.delete;
+        this.update = props.update;
     }
 
     deleteEventHandler = () => {
@@ -24,6 +25,7 @@ class Todo extends React.Component {
     enterKeyEventHandler = (e) => {
         if (e.key === "Enter") {
             this.setState({ readOnly: true });
+            this.update(this.state.item);
         }
     }
 
@@ -38,6 +40,7 @@ class Todo extends React.Component {
         const thisItem = this.state.item;
         thisItem.done = thisItem.done ? false : true; // thisItem.done = !thisItem.done
         this.setState({ item: thisItem });
+        this.update(this.state.item);
     }
 
     render() {
