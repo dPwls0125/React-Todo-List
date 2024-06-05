@@ -29,5 +29,14 @@ export function call(api, method , request){
       return Promise.reject(error);
     });
 }
-
 // Fetch api는 Promise를 이용해 http 요청을 송수신 하는 역할을 한다. 
+
+// 로그인을 위한 API 서비스 메소드 signin
+export function signin(userDTO) {
+    return call("/auth/signin","POST",userDTO){
+        if(response.token){
+            // local 스토리지에 토큰 저장
+            localStorage.setItem("ACCESS_TOEKN")
+        }
+    }
+}
