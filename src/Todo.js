@@ -8,7 +8,9 @@ class Todo extends React.Component {
         this.state = { item: props.item, readOnly: true };  // 매개변수 item 의 변수/값을 item에 대입
 
         this.delete = props.delete;
-        this.update = props.update;
+        this.update = props.update
+        this.get = props.get
+
     }
 
     deleteEventHandler = () => {
@@ -33,6 +35,7 @@ class Todo extends React.Component {
         const thisItem = this.state.item;
         thisItem.title = e.target.value;
         this.setState({ item: thisItem });
+
     }
 
     checkboxEventHandler = (e) => {

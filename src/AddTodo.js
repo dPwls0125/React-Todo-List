@@ -16,17 +16,25 @@ class AddTodo extends React.Component {
 
     onButtonClick = () => {
         this.add(this.state.item);
-        this.setState({item:{title:""}});
+        //this.setState({item:{title:""}});
     }
 
     enterKeyEventHandler = (e) => {
-        if(e.key ==='Enter' &&  !this.state.add){
-            e.preventDefault();
-            this.onButtonClick();
+        if (e.key === 'Enter' && !this.state.add && !this.state.isComposing) {
+          console.log('enter');
+          e.preventDefault();
+          this.onButtonClick();
         }
-    }
-
+      };
     
+      handleCompositionStart = () => {
+        this.setState({ isComposing: true });
+      };
+    
+      handleCompositionEnd = () => {
+        this.setState({ isComposing: false });
+      };
+
 
     render(){
         return(
@@ -39,6 +47,8 @@ class AddTodo extends React.Component {
                         onChange={this.onInputChange}
                         value={this.state.item.title}
                         onKeyDown={this.enterKeyEventHandler}
+                        onCompositionStart={this.handleCompositionStart}
+                        onCompositionEnd={this.handleCompositionEnd}
                         />
                     </Grid>
                 <Grid xs={1} md={1} item>

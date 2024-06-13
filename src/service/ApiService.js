@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "../app-config";
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 export function call(api, method , request){
+    console.log("call 실행");
     let headers = new Headers({
         "Content-Type" : "application/json",
     });
@@ -29,6 +30,7 @@ export function call(api, method , request){
             }
             return json;
         })
+
     )
     .catch((error) => {
         
@@ -58,6 +60,7 @@ export function signin(userDTO) {
     });
 }
 
+
 // 회원가입 요청
 export function signup(userDTO){
     return call("/auth/signUp","POST",userDTO)
@@ -80,6 +83,6 @@ export function signup(userDTO){
 // 로그 아웃
 export function signout() {
     // local 스토리지에 토큰 삭제
-    localStorage.setItem("ACCESS_TOKEN",null);
-    window.location.href = "/"; 
+    localStorage.setItem("ACCESS_TOKEN", null);
+    window.location.href = "/login"; 
 }

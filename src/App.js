@@ -16,8 +16,12 @@ class App extends React.Component {
   }
   
   add = (item) => {
+    console.log(item, typeof item);
     call("/todo","POST",item).then((response)=>
-      this.setState({items:response.data})
+      {
+        console.log("add 실행")
+        this.get()
+      }
     );
   }
 
@@ -31,7 +35,7 @@ class App extends React.Component {
 
   delete = (item)=>{
     call("/todo","DELETE",item).then((response) => 
-      this.setState({items:response.data})
+      this.get()
     );
   }
 
@@ -41,6 +45,12 @@ class App extends React.Component {
     )
   }
 
+  get = () => {
+    call("/todo","GET",null).then((response)=>
+      this.setState({items:response.data, loading:false})
+    );
+  }
+  
 /*
 컴포넌트 마운팅(Mounting)은 React에서 컴포넌트가 생성되어 DOM에 삽입되는 과정을 의미합니다. 
 이는 React 컴포넌트의 생명주기(Lifecycle) 중 초기 단계에 해당하며, 마운팅은 컴포넌트가 처음으로 페이지에 렌더링될 때 발생합니다.
@@ -48,9 +58,8 @@ class App extends React.Component {
 
 //componentDidmount는 페이지(돔) 마운트가 일어나고 렌더링 되기 전에 실행된다.
 componentDidMount() {
-  call("/todo","GET",null).then((response)=>
-    this.setState({items:response.data, loading:false})
-  );
+  console.log("componentDidMount");
+  this.get()
 }
 
 render(){

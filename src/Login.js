@@ -22,8 +22,8 @@ class Login extends React.Component {
     render() {
         return (
             <Container component="main" maxWidth="xs" style={{marginTop :"8%"}}>
-            <Grid container spacing={2}>
-                <Typography component="h1" variant="h5">
+            <Grid container spacing={2} direction="column" alignItems="center">
+                <Typography component="h1" variant="h5" align ="center">
                     로그인
                 </Typography>
             </Grid>
@@ -67,12 +67,34 @@ class Login extends React.Component {
                         <Grid item>계정이 없습니까? 여기서 가입하세요.
                         </Grid>
                     </Link>
-                </Grid>
-            </form>
-        </Container>
-        )
-        
+                    <Grid item xs={12}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                href="http://localhost:8080/oauth2/authorization/kakao"
+                                style={{
+                                    backgroundColor: "#FEE500", // 카카오 노란색
+                                    color: "#000000", // 검은색 텍스트
+                                    marginTop: "10px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <img 
+                                    src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" 
+                                    alt="Kakao logo" 
+                                    style={{ marginRight: "8px", height: "24px" }} 
+                                />
+                                카카오로 로그인
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Container>
+        );
     }
 }
+
 
 export default Login;
