@@ -32,11 +32,15 @@ class App extends React.Component {
   }
 
   update = (item) => {
-    call("/todo", "PUT", item).then((response) =>
-      this.setState({ items: response.data })
-    )
-  }
-
+    console.log("Updating item:", item); // 데이터 확인용 로그 추가
+    call("/todo", "PUT", item).then((response) => {
+      console.log("Update response:", response); // 응답 로그 추가
+      this.get(this.state.page, this.state.size);
+      console.log("update 메서드 종료");
+    }).catch((error) => {
+      console.error("Failed to update todo", error);
+    });
+}
   get = (page = this.state.page, size = this.state.size) => {
     call(`/todo/page?page=${page}&size=${size}`, "GET", null).then((response) => {
       console.log("Fetched todos:", response); // 응답 객체 구조 확인
