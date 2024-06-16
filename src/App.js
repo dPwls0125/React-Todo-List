@@ -40,7 +40,8 @@ class App extends React.Component {
     }).catch((error) => {
       console.error("Failed to update todo", error);
     });
-}
+  }
+
   get = (page = this.state.page, size = this.state.size) => {
     call(`/todo/page?page=${page}&size=${size}`, "GET", null).then((response) => {
       console.log("Fetched todos:", response); // 응답 객체 구조 확인
@@ -99,11 +100,10 @@ class App extends React.Component {
       <div>
         {navigationBar}
         <Container maxWidth="md">
-        <PhraseComponent />
+          <PhraseComponent />
           <AddTodo add={this.add} />
           <div className="TodoList">{todoItems}</div>
           {pagination}
-        
         </Container>
       </div>
     );

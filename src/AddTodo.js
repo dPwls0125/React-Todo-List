@@ -1,33 +1,16 @@
 import React from "react";
-import { TextField, Paper, Button, Grid, IconButton } from "@material-ui/core";
+import { TextField, Paper, Grid, IconButton, MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 class AddTodo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { item: { title: "" } };
-    this.add = props.add; // props의 함수를 this.add에 연결, props에는 상위 컴포넌트 App.js의 함수, 매개 변수가 들어있음
+    this.state = { 
+      item: { title: "", priority: "LOW" },
+      isComposing: false // IME 조합 상태 추가
+    };
+    this.add = props.add;
   }
-
-  onInputChange = (e) => {
-    const thisItem = this.state.item;
-    thisItem.title = e.target.value;
-    this.setState({ item: thisItem });
-    console.log(thisItem);
-  };
-
-  onButtonClick = () => {
-    this.add(this.state.item);
-    this.setState({ item: { title: "" } });
-  };
-
-  enterKeyEventHandler = (e) => {
-    if (e.key === 'Enter' && !this.state.add && !this.state.isComposing) {
-      console.log('enter');
-      e.preventDefault();
-      this.onButtonClick();
-    }
-  };
 
   handleCompositionStart = () => {
     this.setState({ isComposing: true });
@@ -37,11 +20,35 @@ class AddTodo extends React.Component {
     this.setState({ isComposing: false });
   };
 
+  onInputChange = (e) => {
+    const thisItem = this.state.item;
+    thisItem.title = e.target.value;
+    this.setState({ item: thisItem });
+  };
+
+  onPriorityChange = (e) => {
+    const thisItem = this.state.item;
+    thisItem.priority = e.target.value;
+    this.setState({ item: thisItem });
+  };
+
+  onButtonClick = () => {
+    this.add(this.state.item);
+    this.setState({ item: { title: "", priority: "LOW" } });
+  };
+
+  enterKeyEventHandler = (e) => {
+    if (e.key === 'Enter' && !this.state.isComposing) { // IME 조합 중이 아닐 때만 실행
+      e.preventDefault();
+      this.onButtonClick();
+    }
+  };
+
   render() {
     return (
       <Paper style={{ margin: 16, padding: 16 }}>
         <Grid container alignItems="center">
-          <Grid item xs={10} md={11} style={{ paddingRight: 16 }}>
+          <Grid item xs={8} md={8} style={{ paddingRight: 16 }}>
             <TextField
               placeholder="Add Todo here"
               fullWidth
@@ -52,7 +59,20 @@ class AddTodo extends React.Component {
               onCompositionEnd={this.handleCompositionEnd}
             />
           </Grid>
-          <Grid item xs={2} md={1}>
+          <Grid item xs={3} md={3}>
+            <FormControl fullWidth>
+              <InputLabel>Priority</InputLabel>
+              <Select
+                value={this.state.item.priority}
+                onChange={this.onPriorityChange}
+              >
+                <MenuItem value="HIGH">High</MenuItem>
+                <MenuItem value="MEDIUM">Medium</MenuItem>
+                <MenuItem value="LOW">Low</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={1} md={1}>
             <IconButton
               color="primary"
               onClick={this.onButtonClick}
